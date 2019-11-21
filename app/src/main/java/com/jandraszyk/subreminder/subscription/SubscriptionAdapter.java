@@ -1,6 +1,8 @@
 package com.jandraszyk.subreminder.subscription;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,6 +38,32 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
             subDate = itemView.findViewById(R.id.sub_date);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION) {
+                        final Subscription subscription = subscriptions.get(position);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                                .setTitle("Delete this?")
+                                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        subscriptions.remove(subscription);
+                                        notifyItemRemoved(position);
+                                        notifyItemRangeChanged(position, subscriptions.size());
+                                    }
+                                })
+                                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                });
+                        builder.show();
+                    }
+                    return true;
+                }
+            });
         }
 
         @Override
