@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,6 +42,9 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
 
         @Override
         public void onClick(View view) {
+            Animation animation = new AlphaAnimation(0.3f,1.0f);
+            animation.setDuration(500);
+            view.startAnimation(animation);
             int position = getAdapterPosition();
             if(position != RecyclerView.NO_POSITION) {
                 Subscription subscription = subscriptions.get(position);
@@ -62,8 +67,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         LayoutInflater inflater = LayoutInflater.from(context);
         View subscriptionView = inflater.inflate(R.layout.subscription_element, viewGroup, false);
 
-        ViewHolder viewHolder = new ViewHolder(subscriptionView);
-        return viewHolder;
+        return new ViewHolder(subscriptionView);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         TextView subName = viewHolder.subName;
         subName.setText(subscription.getSubscriptionName());
         TextView subCost = viewHolder.subCost;
-        subCost.setText(subscription.getSubscriptionCost().toString());
+        subCost.setText(String.format("%s\tPLN", subscription.getSubscriptionCost()));
         TextView subDate = viewHolder.subDate;
         subDate.setText(String.format("In %s day(s)",manager.calculateDaysUntilNextPayment(subscription, Calendar.getInstance())));
         ImageView imageView = viewHolder.subImage;

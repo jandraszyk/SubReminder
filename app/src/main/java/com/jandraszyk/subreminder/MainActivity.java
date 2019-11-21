@@ -1,5 +1,6 @@
 package com.jandraszyk.subreminder;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, NewSubscription.class));
+                overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
             }
         });
 
@@ -82,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeList(){
         subscriptionList = new ArrayList<>();
-        subscriptionList.add(new Subscription("SPOTIFY", 19.99, 14, BitmapFactory.decodeResource(getResources(),R.drawable.spotify)));
-        subscriptionList.add(new Subscription("Xbox Live Gold", 29.0, 22, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-        subscriptionList.add(new Subscription("Xbox Game Pass", 40.0, 29, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-        subscriptionList.add(new Subscription("HBO GO", 19.90, 15, BitmapFactory.decodeResource(getResources(),R.drawable.hbo)));
+        subscriptionList.add(new Subscription("SPOTIFY", 19.99, 7, BitmapFactory.decodeResource(getResources(),R.drawable.spotify)));
+        subscriptionList.add(new Subscription("Xbox Live Gold", 29.0, 25, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
+        subscriptionList.add(new Subscription("Xbox Game Pass", 40.0, 26, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
+        subscriptionList.add(new Subscription("HBO GO", 19.90, 1, BitmapFactory.decodeResource(getResources(),R.drawable.hbo)));
         subscriptionList.add(new Subscription("PlayStation Plus", 64.0, 31, BitmapFactory.decodeResource(getResources(),R.drawable.playstation)));
         subscriptionList.add(new Subscription("Inea Internet", 70.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.inea)));
         subscriptionList.add(new Subscription("ZUS", 150.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.zus)));
