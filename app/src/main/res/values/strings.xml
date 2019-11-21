@@ -3,4 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="main_screen">My subscriptions</string>
     <string name="new_subscription">New subscription</string>
+    <string name="sub_cost">Cost</string>
+    <string name="sub_name">Name</string>
+    <string name="sub_first_payment">First payment</string>
+    <string name="add_subscription">Add subscription</string>
 </resources>

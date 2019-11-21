@@ -1,11 +1,10 @@
 package com.jandraszyk.subreminder;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NewSubscription.class));
+                startActivityForResult(new Intent(MainActivity.this, NewSubscriptionActivity.class),2);
                 overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
             }
         });
@@ -47,6 +46,20 @@ public class MainActivity extends AppCompatActivity {
         subscriptionAdapter = new SubscriptionAdapter(subscriptionList);
         rvSubscriptions.setAdapter(subscriptionAdapter);
         rvSubscriptions.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2) {
+            String subName = data.getStringExtra("NAME");
+            Double subCost = data.getDoubleExtra("COST",0.0);
+            Integer startDate = data.getIntExtra("DATE",1);
+            Subscription subscription = new Subscription(subName,subCost,startDate, BitmapFactory.decodeResource(getResources(), R.drawable.xbox));
+            subscriptionList.add(subscription);
+            subscriptionAdapter.notifyItemInserted(subscriptionList.size()-1);
+//            subscriptionAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -83,14 +96,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeList(){
         subscriptionList = new ArrayList<>();
-        subscriptionList.add(new Subscription("SPOTIFY", 19.99, 7, BitmapFactory.decodeResource(getResources(),R.drawable.spotify)));
-        subscriptionList.add(new Subscription("Xbox Live Gold", 29.0, 25, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-        subscriptionList.add(new Subscription("Xbox Game Pass", 40.0, 26, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-        subscriptionList.add(new Subscription("HBO GO", 19.90, 1, BitmapFactory.decodeResource(getResources(),R.drawable.hbo)));
-        subscriptionList.add(new Subscription("PlayStation Plus", 64.0, 31, BitmapFactory.decodeResource(getResources(),R.drawable.playstation)));
-        subscriptionList.add(new Subscription("Inea Internet", 70.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.inea)));
-        subscriptionList.add(new Subscription("ZUS", 150.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.zus)));
-        subscriptionList.add(new Subscription("iCloud", 3.99, 24, BitmapFactory.decodeResource(getResources(),R.drawable.icloud)));
-        subscriptionList.add(new Subscription("Netflix", 54.00, 29, BitmapFactory.decodeResource(getResources(),R.drawable.netflix)));
+//        subscriptionList.add(new Subscription("Spotify", 19.99, 7, BitmapFactory.decodeResource(getResources(),R.drawable.spotify)));
+//        subscriptionList.add(new Subscription("Xbox Live Gold", 29.0, 25, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
+//        subscriptionList.add(new Subscription("Xbox Game Pass", 40.0, 26, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
+//        subscriptionList.add(new Subscription("HBO GO", 19.90, 1, BitmapFactory.decodeResource(getResources(),R.drawable.hbo)));
+//        subscriptionList.add(new Subscription("PlayStation Plus", 64.0, 31, BitmapFactory.decodeResource(getResources(),R.drawable.playstation)));
+//        subscriptionList.add(new Subscription("Inea Internet", 70.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.inea)));
+//        subscriptionList.add(new Subscription("ZUS", 150.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.zus)));
+//        subscriptionList.add(new Subscription("iCloud", 3.99, 24, BitmapFactory.decodeResource(getResources(),R.drawable.icloud)));
+//        subscriptionList.add(new Subscription("Netflix", 54.00, 29, BitmapFactory.decodeResource(getResources(),R.drawable.netflix)));
     }
 }
