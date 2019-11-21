@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.jandraszyk.subreminder.subscription.Subscription;
 import com.jandraszyk.subreminder.subscription.SubscriptionAdapter;
@@ -22,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView subscriptionListView;
     private List<Subscription> subscriptionList;
     private SubscriptionAdapter subscriptionAdapter;
 
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 2) {
             String subName = data.getStringExtra("NAME");
             Double subCost = data.getDoubleExtra("COST",0.0);
-            Integer startDate = data.getIntExtra("DATE",1);
+            int startDate = data.getIntExtra("DATE",1);
             Subscription subscription = new Subscription(subName,subCost,startDate, BitmapFactory.decodeResource(getResources(), R.drawable.xbox));
             subscriptionList.add(subscription);
             subscriptionAdapter.notifyItemInserted(subscriptionList.size()-1);

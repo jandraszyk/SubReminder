@@ -6,13 +6,13 @@ public class Subscription {
 
     private String subscriptionName;
     private Double subscriptionCost;
-    private int subscribtionStartDate;
+    private int subscriptionStartDate;
     private Bitmap subscriptionImage;
 
-    public Subscription(String subscriptionName, Double subscriptionCost, int subscribtionStartDate, Bitmap subscriptionImage) {
+    public Subscription(String subscriptionName, Double subscriptionCost, int subscriptionStartDate, Bitmap subscriptionImage) {
         this.subscriptionName = subscriptionName;
         this.subscriptionCost = subscriptionCost;
-        this.subscribtionStartDate = subscribtionStartDate;
+        this.subscriptionStartDate = subscriptionStartDate;
         this.subscriptionImage = subscriptionImage;
     }
 
@@ -32,12 +32,12 @@ public class Subscription {
         this.subscriptionCost = subscriptionCost;
     }
 
-    public int getSubscribtionStartDate() {
-        return subscribtionStartDate;
+    public int getSubscriptionStartDate() {
+        return subscriptionStartDate;
     }
 
-    public void setSubscribtionStartDate(int subscribtionStartDate) {
-        this.subscribtionStartDate = subscribtionStartDate;
+    public void setSubscriptionStartDate(int subscriptionStartDate) {
+        this.subscriptionStartDate = subscriptionStartDate;
     }
 
     public Bitmap getSubscriptionImage() {

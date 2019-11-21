@@ -14,10 +14,10 @@ public class SubscriptionManager {
     public Integer calculateDaysUntilNextPayment(Subscription subscription, Calendar today) {
         int maxDaysInMonth = today.getActualMaximum(Calendar.DAY_OF_MONTH);
         int day = today.get(Calendar.DAY_OF_MONTH);
-        if(day > subscription.getSubscribtionStartDate()) {
-            return maxDaysInMonth - (day - subscription.getSubscribtionStartDate());
+        if(day > subscription.getSubscriptionStartDate()) {
+            return maxDaysInMonth - (day - subscription.getSubscriptionStartDate());
         } else {
-            return subscription.getSubscribtionStartDate() - day;
+            return subscription.getSubscriptionStartDate() - day;
         }
     }
 }
