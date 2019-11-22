@@ -1,45 +1,58 @@
 package com.jandraszyk.subreminder;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.jandraszyk.subreminder.subscription.Subscription;
 import com.jandraszyk.subreminder.subscription.SubscriptionAdapter;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Subscription> subscriptionList;
+    private ArrayList<Subscription> subscriptionList;
     private SubscriptionAdapter subscriptionAdapter;
+    private RecyclerView rvSubscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("TAG", "onCreate fired");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
+        loadData();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveData();
                 startActivityForResult(new Intent(MainActivity.this, NewSubscriptionActivity.class),2);
                 overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
             }
         });
 
-        RecyclerView rvSubscriptions = findViewById(R.id.subscriptions_recycler_view);
+        rvSubscriptions = findViewById(R.id.subscriptions_recycler_view);
         initializeList();
         subscriptionAdapter = new SubscriptionAdapter(subscriptionList);
         rvSubscriptions.setAdapter(subscriptionAdapter);
@@ -48,15 +61,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("TAG", "onActivityResult fired");
+        updateData();
+        subscriptionAdapter.notifyDataSetChanged();
         if(requestCode == 2) {
             String subName = data.getStringExtra("NAME");
             Double subCost = data.getDoubleExtra("COST",0.0);
             int startDate = data.getIntExtra("DATE",1);
-            Subscription subscription = new Subscription(subName,subCost,startDate, BitmapFactory.decodeResource(getResources(), R.drawable.xbox));
-            subscriptionList.add(subscription);
+            Subscription subscription = new Subscription(subName,subCost,startDate, R.drawable.xbox);
+            if(subscriptionList != null) {
+                subscriptionList.add(subscription);
+            } else {
+                subscriptionList = new ArrayList<>();
+                subscriptionList.add(subscription);
+            }
             subscriptionAdapter.notifyItemInserted(subscriptionList.size()-1);
-//            subscriptionAdapter.notifyDataSetChanged();
         }
     }
 
@@ -85,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
     }
 
     @Override
@@ -93,15 +115,78 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeList(){
-        subscriptionList = new ArrayList<>();
-//        subscriptionList.add(new Subscription("Spotify", 19.99, 7, BitmapFactory.decodeResource(getResources(),R.drawable.spotify)));
-//        subscriptionList.add(new Subscription("Xbox Live Gold", 29.0, 25, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-//        subscriptionList.add(new Subscription("Xbox Game Pass", 40.0, 26, BitmapFactory.decodeResource(getResources(),R.drawable.xbox)));
-//        subscriptionList.add(new Subscription("HBO GO", 19.90, 1, BitmapFactory.decodeResource(getResources(),R.drawable.hbo)));
-//        subscriptionList.add(new Subscription("PlayStation Plus", 64.0, 31, BitmapFactory.decodeResource(getResources(),R.drawable.playstation)));
-//        subscriptionList.add(new Subscription("Inea Internet", 70.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.inea)));
-//        subscriptionList.add(new Subscription("ZUS", 150.0, 1, BitmapFactory.decodeResource(getResources(),R.drawable.zus)));
-//        subscriptionList.add(new Subscription("iCloud", 3.99, 24, BitmapFactory.decodeResource(getResources(),R.drawable.icloud)));
-//        subscriptionList.add(new Subscription("Netflix", 54.00, 29, BitmapFactory.decodeResource(getResources(),R.drawable.netflix)));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("TAG", "onPaused fired");
+        saveData();
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String jsonSubs = gson.toJson(subscriptionList);
+        Log.d("TAG",jsonSubs);
+        editor.putString("SUBS",jsonSubs);
+        editor.apply();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences",MODE_PRIVATE);
+        Type type = new TypeToken<ArrayList<Subscription>>(){}.getType();
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("SUBS", null);
+        subscriptionList = gson.fromJson(json, type);
+        if(subscriptionList == null) {
+            subscriptionList = new ArrayList<>();
+        }
+        Log.d("TAG", "Loaded list: " + subscriptionList.toString());
+    }
+
+    private void updateData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPreferences",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("SUBS", null);
+        Type type = new TypeToken<ArrayList<Subscription>>(){}.getType();
+        ArrayList<Subscription> temp = gson.fromJson(json, type);
+        subscriptionList = temp;
+        subscriptionAdapter.setSubscriptions(temp);
+        subscriptionAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("TAG", "onStart fired");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("TAG", "onRestart fired");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TAG", "onResume fired");
+//        updateData();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("TAG", "onStop fired");
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("TAG", "onDestroy fired");
     }
 }

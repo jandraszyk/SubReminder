@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Toast;
+
+import com.jandraszyk.subreminder.inputfilter.DecimalDigitsInputFilter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,6 +37,8 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         dateInput = findViewById(R.id.date_edit);
         costInput = findViewById(R.id.cost_edit);
         addSubscriptionButton = findViewById(R.id.add_subscription_button);
+
+        costInput.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)});
 
         addSubscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override

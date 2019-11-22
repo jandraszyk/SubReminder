@@ -2,18 +2,30 @@ package com.jandraszyk.subreminder.subscription;
 
 import android.graphics.Bitmap;
 
-public class Subscription {
+import java.io.Serializable;
+
+public class Subscription implements Serializable {
 
     private String subscriptionName;
     private Double subscriptionCost;
     private int subscriptionStartDate;
-    private Bitmap subscriptionImage;
+//    private Bitmap subscriptionImage;
+    private int imageResourceNumber;
 
-    public Subscription(String subscriptionName, Double subscriptionCost, int subscriptionStartDate, Bitmap subscriptionImage) {
+    public Subscription(String subscriptionName, Double subscriptionCost, int subscriptionStartDate, int imageResourceNumber) {
         this.subscriptionName = subscriptionName;
         this.subscriptionCost = subscriptionCost;
         this.subscriptionStartDate = subscriptionStartDate;
-        this.subscriptionImage = subscriptionImage;
+        this.imageResourceNumber = imageResourceNumber;
+//        this.subscriptionImage = subscriptionImage;
+    }
+
+    public int getImageResourceNumber() {
+        return imageResourceNumber;
+    }
+
+    public void setImageResourceNumber(int imageResourceNumber) {
+        this.imageResourceNumber = imageResourceNumber;
     }
 
     public String getSubscriptionName() {
@@ -40,11 +52,11 @@ public class Subscription {
         this.subscriptionStartDate = subscriptionStartDate;
     }
 
-    public Bitmap getSubscriptionImage() {
-        return subscriptionImage;
-    }
-
-    public void setSubscriptionImage(Bitmap subscriptionImage) {
-        this.subscriptionImage = subscriptionImage;
-    }
+//    public Bitmap getSubscriptionImage() {
+//        return subscriptionImage;
+//    }
+//
+//    public void setSubscriptionImage(Bitmap subscriptionImage) {
+//        this.subscriptionImage = subscriptionImage;
+//    }
 }

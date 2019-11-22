@@ -3,8 +3,11 @@ package com.jandraszyk.subreminder.subscription;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +82,15 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         }
     }
 
+    public List<Subscription> getSubscriptions() {
+        return subscriptions;
+    }
+
+    public void setSubscriptions(List<Subscription> subscriptions) {
+        this.subscriptions = subscriptions;
+        notifyDataSetChanged();
+    }
+
     private List<Subscription> subscriptions;
 
     public SubscriptionAdapter(List<Subscription> subscriptions) {
@@ -107,12 +119,14 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         TextView subDate = viewHolder.subDate;
         subDate.setText(String.format("In %s day(s)",manager.calculateDaysUntilNextPayment(subscription, Calendar.getInstance())));
         ImageView imageView = viewHolder.subImage;
-        imageView.setImageBitmap(subscription.getSubscriptionImage());
+        Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), subscription.getImageResourceNumber());
+        imageView.setImageBitmap(imageBitmap);
 
     }
 
     @Override
     public int getItemCount() {
+        Log.d("SUBS", String.valueOf(subscriptions.size()));
         return subscriptions.size();
     }
 }
