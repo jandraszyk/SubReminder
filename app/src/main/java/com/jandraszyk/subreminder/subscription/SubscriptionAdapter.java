@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Outline;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,9 +37,11 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         TextView subName;
         TextView subCost;
         TextView subDate;
+        LinearLayout layout;
 
         ViewHolder(View itemView) {
             super(itemView);
+            layout = itemView.findViewById(R.id.linear_subscription_element);
             subImage = itemView.findViewById(R.id.sub_image);
             subName = itemView.findViewById(R.id.sub_name);
             subCost = itemView.findViewById(R.id.sub_cost);
@@ -121,6 +128,9 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         ImageView imageView = viewHolder.subImage;
         Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), subscription.getImageResourceNumber());
         imageView.setImageBitmap(imageBitmap);
+        //TODO: Change color of the element based on the selection in the NewSubscriptionActivity
+        Drawable shape = viewHolder.layout.getBackground();
+        shape.setTint(context.getResources().getColor(android.R.color.holo_blue_bright));
 
     }
 
