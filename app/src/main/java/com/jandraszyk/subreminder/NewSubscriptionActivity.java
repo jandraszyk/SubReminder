@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 
 import com.jandraszyk.subreminder.inputfilter.DecimalDigitsInputFilter;
 
@@ -23,7 +24,9 @@ public class NewSubscriptionActivity extends AppCompatActivity {
     private TextInputEditText nameInput;
     private TextInputEditText dateInput;
     private TextInputEditText costInput;
+    private ImageView subscriptionIcon;
     private Button addSubscriptionButton;
+    private Button subscriptionColorButton;
     private String subName;
     private Integer startDate;
     private Double subCost;
@@ -37,6 +40,8 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         dateInput = findViewById(R.id.date_edit);
         costInput = findViewById(R.id.cost_edit);
         addSubscriptionButton = findViewById(R.id.add_subscription_button);
+        subscriptionIcon = findViewById(R.id.iv_subscription_icon);
+        subscriptionColorButton = findViewById(R.id.bt_subscription_color);
 
         costInput.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)});
 
@@ -58,6 +63,20 @@ public class NewSubscriptionActivity extends AppCompatActivity {
                 intent.putExtra("DATE", startDate);
                 setResult(2,intent);
                 finish();
+            }
+        });
+
+        subscriptionColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        subscriptionIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                
             }
         });
 
