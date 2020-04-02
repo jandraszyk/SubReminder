@@ -1,5 +1,6 @@
 package com.jandraszyk.subreminder;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
@@ -14,6 +15,10 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 
 import com.jandraszyk.subreminder.inputfilter.DecimalDigitsInputFilter;
+import com.skydoves.colorpickerpreference.ColorEnvelope;
+import com.skydoves.colorpickerpreference.ColorListener;
+import com.skydoves.colorpickerpreference.ColorPickerDialog;
+import com.skydoves.colorpickerpreference.FlagView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,7 +74,16 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         subscriptionColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getApplicationContext(),
+                        AlertDialog.THEME_DEVICE_DEFAULT_DARK);
+                builder.setTitle("Choose subscription color");
+                builder.setPreferenceName("backgroundColor");
+                builder.setPositiveButton("SELECT", new ColorListener() {
+                    @Override
+                    public void onColorSelected(ColorEnvelope colorEnvelope) {
 
+                    }
+                });
             }
         });
 
