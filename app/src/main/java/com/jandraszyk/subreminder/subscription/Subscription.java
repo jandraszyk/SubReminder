@@ -11,13 +11,23 @@ public class Subscription implements Serializable {
     private int subscriptionStartDate;
 //    private Bitmap subscriptionImage;
     private int imageResourceNumber;
+    private int subscriptionBackgroundColor;
 
-    public Subscription(String subscriptionName, Double subscriptionCost, int subscriptionStartDate, int imageResourceNumber) {
+    public Subscription(String subscriptionName, Double subscriptionCost, int subscriptionStartDate, int imageResourceNumber, int subscriptionBackgroundColor) {
         this.subscriptionName = subscriptionName;
         this.subscriptionCost = subscriptionCost;
         this.subscriptionStartDate = subscriptionStartDate;
         this.imageResourceNumber = imageResourceNumber;
 //        this.subscriptionImage = subscriptionImage;
+        this.subscriptionBackgroundColor = subscriptionBackgroundColor;
+    }
+
+    public int getSubscriptionBackgroundColor() {
+        return subscriptionBackgroundColor;
+    }
+
+    public void setSubscriptionBackgroundColor(int subscriptionBackgroundColor) {
+        this.subscriptionBackgroundColor = subscriptionBackgroundColor;
     }
 
     public int getImageResourceNumber() {

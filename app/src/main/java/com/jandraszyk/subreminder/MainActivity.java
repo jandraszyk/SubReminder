@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -70,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
             String subName = data.getStringExtra("NAME");
             Double subCost = data.getDoubleExtra("COST",0.0);
             int startDate = data.getIntExtra("DATE",1);
-            Subscription subscription = new Subscription(subName,subCost,startDate, R.drawable.xbox);
+            int subColor = data.getIntExtra("COLOR", Color.YELLOW);
+            Subscription subscription = new Subscription(subName,subCost,startDate, R.drawable.xbox, subColor);
             if(subscriptionList != null) {
                 subscriptionList.add(subscription);
             } else {

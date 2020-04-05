@@ -2,7 +2,9 @@ package com.jandraszyk.subreminder;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,14 +17,12 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 
 import com.jandraszyk.subreminder.inputfilter.DecimalDigitsInputFilter;
-import com.skydoves.colorpickerpreference.ColorEnvelope;
-import com.skydoves.colorpickerpreference.ColorListener;
-import com.skydoves.colorpickerpreference.ColorPickerDialog;
-import com.skydoves.colorpickerpreference.FlagView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import top.defaults.colorpicker.ColorPickerPopup;
 
 public class NewSubscriptionActivity extends AppCompatActivity {
 
@@ -34,6 +34,7 @@ public class NewSubscriptionActivity extends AppCompatActivity {
     private Button subscriptionColorButton;
     private String subName;
     private Integer startDate;
+    private Integer subscriptionColor = Color.YELLOW;
     private Double subCost;
     final Calendar calendar = Calendar.getInstance();
 
@@ -49,6 +50,28 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         subscriptionColorButton = findViewById(R.id.bt_subscription_color);
 
         costInput.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)});
+
+        subscriptionColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ColorPickerPopup.Builder(getApplicationContext())
+                        .initialColor(Color.RED)
+                        .enableBrightness(true)
+                        .enableAlpha(true)
+                        .okTitle("Select")
+                        .cancelTitle("Cancel")
+                        .showIndicator(true)
+                        .showValue(false)
+                        .build()
+                        .show(view, new ColorPickerPopup.ColorPickerObserver() {
+                            @Override
+                            public void onColorPicked(int color) {
+                                subscriptionColorButton.setBackgroundColor(color);
+                                subscriptionColor = color;
+                            }
+                        });
+            }
+        });
 
         addSubscriptionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,26 +89,13 @@ public class NewSubscriptionActivity extends AppCompatActivity {
                 intent.putExtra("NAME", subName);
                 intent.putExtra("COST", subCost);
                 intent.putExtra("DATE", startDate);
+                intent.putExtra("COLOR", subscriptionColor);
                 setResult(2,intent);
                 finish();
             }
         });
 
-        subscriptionColorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ColorPickerDialog.Builder builder = new ColorPickerDialog.Builder(getApplicationContext(),
-                        AlertDialog.THEME_DEVICE_DEFAULT_DARK);
-                builder.setTitle("Choose subscription color");
-                builder.setPreferenceName("backgroundColor");
-                builder.setPositiveButton("SELECT", new ColorListener() {
-                    @Override
-                    public void onColorSelected(ColorEnvelope colorEnvelope) {
 
-                    }
-                });
-            }
-        });
 
         subscriptionIcon.setOnClickListener(new View.OnClickListener() {
             @Override
