@@ -21,33 +21,40 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:id="@+id/sub_name"
             android:layout_width="match_parent"
-            android:layout_gravity="left"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="3dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:layout_marginTop="3dp"
-            android:text="HELLO" />
+            android:text="HELLO"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/sub_date"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_gravity="left"
             android:layout_height="wrap_content"
+            android:layout_gravity="left"
             android:layout_marginBottom="3dp"
+            android:layout_weight="1"
             android:gravity="center_vertical|bottom"
             android:text="HELLO" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/sub_cost"
         android:layout_width="match_parent"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layout_gravity=""
         android:layout_marginEnd="8dp"
+        android:layout_weight="1"
         android:gravity="center_vertical|right"
         android:text="CENA"
-        android:layout_height="match_parent"/>
+        android:textSize="16sp"
+        android:textStyle="italic" />
 
 </LinearLayout>

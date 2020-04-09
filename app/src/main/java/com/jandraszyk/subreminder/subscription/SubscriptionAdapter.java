@@ -128,7 +128,6 @@ public class SubscriptionAdapter extends RecyclerView.Adapter<SubscriptionAdapte
         ImageView imageView = viewHolder.subImage;
         Bitmap imageBitmap = BitmapFactory.decodeResource(context.getResources(), subscription.getImageResourceNumber());
         imageView.setImageBitmap(imageBitmap);
-        //COMPLETE: Change color of the element based on the selection in the NewSubscriptionActivity
         Drawable shape = viewHolder.layout.getBackground();
         shape.setTint(subscription.getSubscriptionBackgroundColor());
 

@@ -1,16 +1,14 @@
 package com.jandraszyk.subreminder;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -29,12 +27,13 @@ public class NewSubscriptionActivity extends AppCompatActivity {
     private TextInputEditText nameInput;
     private TextInputEditText dateInput;
     private TextInputEditText costInput;
-    private ImageView subscriptionIcon;
+    private ImageView subscriptionIconView;
     private Button addSubscriptionButton;
     private Button subscriptionColorButton;
     private String subName;
     private Integer startDate;
     private Integer subscriptionColor = Color.YELLOW;
+    private Integer subscriptionIconId;
     private Double subCost;
     final Calendar calendar = Calendar.getInstance();
 
@@ -46,7 +45,7 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         dateInput = findViewById(R.id.date_edit);
         costInput = findViewById(R.id.cost_edit);
         addSubscriptionButton = findViewById(R.id.add_subscription_button);
-        subscriptionIcon = findViewById(R.id.iv_subscription_icon);
+        subscriptionIconView = findViewById(R.id.iv_subscription_icon);
         subscriptionColorButton = findViewById(R.id.bt_subscription_color);
 
         costInput.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5,2)});
@@ -90,6 +89,7 @@ public class NewSubscriptionActivity extends AppCompatActivity {
                 intent.putExtra("COST", subCost);
                 intent.putExtra("DATE", startDate);
                 intent.putExtra("COLOR", subscriptionColor);
+                intent.putExtra("ICON", subscriptionIconId);
                 setResult(2,intent);
                 finish();
             }
@@ -97,10 +97,10 @@ public class NewSubscriptionActivity extends AppCompatActivity {
 
 
 
-        subscriptionIcon.setOnClickListener(new View.OnClickListener() {
+        subscriptionIconView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                startActivityForResult(new Intent(NewSubscriptionActivity.this, IconSelectActivity.class),3);
             }
         });
 
@@ -126,5 +126,15 @@ public class NewSubscriptionActivity extends AppCompatActivity {
         String format = "dd/MM/yyyy";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.GERMANY);
         dateInput.setText(simpleDateFormat.format(calendar.getTime()));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 3) {
+            subscriptionIconId = data.getIntExtra("ICON", 1);
+            subscriptionIconView.setImageResource(subscriptionIconId);
+
+        }
     }
 }

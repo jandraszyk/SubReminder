@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             Double subCost = data.getDoubleExtra("COST",0.0);
             int startDate = data.getIntExtra("DATE",1);
             int subColor = data.getIntExtra("COLOR", Color.YELLOW);
-            Subscription subscription = new Subscription(subName,subCost,startDate, R.drawable.xbox, subColor);
+            int subIcon = data.getIntExtra("ICON", 1);
+            Subscription subscription = new Subscription(subName,subCost,startDate, subIcon, subColor);
             if(subscriptionList != null) {
                 subscriptionList.add(subscription);
             } else {

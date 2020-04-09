@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="icons">
+        <item>@drawable/dropbox</item>
+        <item>@drawable/hbo</item>
+        <item>@drawable/netflix</item>
+        <item>@drawable/icloud</item>
+        <item>@drawable/inea</item>
+        <item>@drawable/playstation</item>
+        <item>@drawable/spotify</item>
+        <item>@drawable/soundcloud</item>
+        <item>@drawable/xbox</item>
+        <item>@drawable/zus</item>
+
+        <item>@drawable/bank</item>
+        <item>@drawable/book</item>
+        <item>@drawable/bus</item>
+        <item>@drawable/car</item>
+        <item>@drawable/credit_card</item>
+        <item>@drawable/electricity</item>
+        <item>@drawable/food</item>
+        <item>@drawable/gym</item>
+        <item>@drawable/healthcare</item>
+        <item>@drawable/music</item>
+        <item>@drawable/phone</item>
+        <item>@drawable/plane_ticket</item>
+        <item>@drawable/saving</item>
+        <item>@drawable/shopping_cart</item>
+        <item>@drawable/vacation</item>
+        <item>@drawable/water</item>
+    </integer-array>
+</resources>

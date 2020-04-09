@@ -9,7 +9,6 @@ public class Subscription implements Serializable {
     private String subscriptionName;
     private Double subscriptionCost;
     private int subscriptionStartDate;
-//    private Bitmap subscriptionImage;
     private int imageResourceNumber;
     private int subscriptionBackgroundColor;
 
@@ -18,7 +17,6 @@ public class Subscription implements Serializable {
         this.subscriptionCost = subscriptionCost;
         this.subscriptionStartDate = subscriptionStartDate;
         this.imageResourceNumber = imageResourceNumber;
-//        this.subscriptionImage = subscriptionImage;
         this.subscriptionBackgroundColor = subscriptionBackgroundColor;
     }
 
@@ -62,11 +60,4 @@ public class Subscription implements Serializable {
         this.subscriptionStartDate = subscriptionStartDate;
     }
 
-//    public Bitmap getSubscriptionImage() {
-//        return subscriptionImage;
-//    }
-//
-//    public void setSubscriptionImage(Bitmap subscriptionImage) {
-//        this.subscriptionImage = subscriptionImage;
-//    }
 }
