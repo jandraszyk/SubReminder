@@ -7,4 +7,9 @@
     <string name="sub_name">Name</string>
     <string name="sub_first_payment">First payment</string>
     <string name="add_subscription">Add subscription</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
+    <string name="sign_up_prompt">Don\'t have an account? Signup Here</string>
 </resources>

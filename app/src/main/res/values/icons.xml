@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer-array name="icons">
-        <item>@drawable/dropbox</item>
-        <item>@drawable/hbo</item>
-        <item>@drawable/netflix</item>
-        <item>@drawable/icloud</item>
-        <item>@drawable/inea</item>
-        <item>@drawable/playstation</item>
-        <item>@drawable/spotify</item>
-        <item>@drawable/soundcloud</item>
-        <item>@drawable/xbox</item>
-        <item>@drawable/zus</item>
-
         <item>@drawable/bank</item>
         <item>@drawable/book</item>
         <item>@drawable/bus</item>

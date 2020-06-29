@@ -1,25 +1,25 @@
 package com.jandraszyk.subreminder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jandraszyk.subreminder.subscription.Subscription;
@@ -27,13 +27,13 @@ import com.jandraszyk.subreminder.subscription.SubscriptionAdapter;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Subscription> subscriptionList;
     private SubscriptionAdapter subscriptionAdapter;
     private RecyclerView rvSubscriptions;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,16 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
             }
         });
+
+        auth = FirebaseAuth.getInstance();
+
+        if(auth.getCurrentUser() == null) {
+            finish();
+
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+
+        FirebaseUser user = auth.getCurrentUser();
 
         rvSubscriptions = findViewById(R.id.subscriptions_recycler_view);
         initializeList();
@@ -100,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            auth.signOut();
+            finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            Toast.makeText(MainActivity.this, "Signed out!!!!", Toast.LENGTH_LONG).show();
             return true;
         }
 
